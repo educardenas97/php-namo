@@ -1,15 +1,17 @@
 <?php
     class Carrera {
 
-        public function setCarrera($detalle) {
+        public function setCarrera($detalle):string {
             require("../conexion.php");
+            $response;
             $sql = "INSERT INTO carrera (car_codigo, car_detalle) VALUES (' ', '$detalle')";
             if ($conn->query($sql) === TRUE) {
-                echo "New record created successfully";
+                $response = "New record created successfully";
             } else {
-                echo "Error: " . $sql . "<br>" . $conn->error;
+                $response = "Error: " . $sql . "<br>" . $conn->error;
             }
             $conn->close();
+            return $response;
         }
 
 
@@ -27,8 +29,8 @@
                 return json_encode($postArray,JSON_INVALID_UTF8_SUBSTITUTE);
             } else {
                 http_response_code(404);
-                echo json_encode( array("message" => "No record found.") );
                 $conn->close();
+                return json_encode( array("message" => "No record found.") );
             }
         }
 
